@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sea Memory Challenge</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="score-box">LEVEL: <span id="level-val">0</span></div>
+    <h2 id="status">Ready?</h2>
+
+    <div class="grid">
+        <div class="card" id="crab" onclick="handleUserClick('crab')"><img src="icons/crab.png" alt="Crab"></div>
+        <div class="card" id="dolphin" onclick="handleUserClick('dolphin')"><img src="icons/dolphin.png" alt="Dolphin"></div>
+        <div class="card" id="seaturtle" onclick="handleUserClick('seaturtle')"><img src="icons/seaturtle.png" alt="Turtle"></div>
+        <div class="card" id="starfish" onclick="handleUserClick('starfish')"><img src="icons/starfish.png" alt="Starfish"></div>
+    </div>
+
+    <button id="start-btn" class="btn-start" onclick="startGame()">START GAME</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
