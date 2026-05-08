@@ -163,28 +163,40 @@
             });
         }
 
-        function handleUserClick(id) {
-            if (isPlayingSequence) return;
+function handleUserClick(id) {
+    if (isPlayingSequence) return;
 
-            // Instant feedback
-            sounds[id].currentTime = 0;
-            sounds[id].play().catch(() => {});
-            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    // 1. Appliquer l'animation visuelle immédiatement
+    const card = document.getElementById(id);
+    card.classList.remove('playing'); // On reset au cas où
+    void card.offsetWidth; // Force le "reflow" pour redéclencher l'animation
+    card.classList.add('playing');
 
-            userSequence.push(id);
-            const checkIdx = userSequence.length - 1;
+    // 2. Retirer la classe après l'animation (500ms comme dans le CSS)
+    setTimeout(() => {
+        card.classList.remove('playing');
+    }, 500);
 
-            if (userSequence[checkIdx] !== gameSequence[checkIdx]) {
-                gameOver();
-                return;
-            }
+    // 3. Son et Haptique
+    sounds[id].currentTime = 0;
+    sounds[id].play().catch(() => {});
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
 
-            if (userSequence.length === gameSequence.length) {
-                document.getElementById('status').innerText = "Nice! ✨";
-                if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-                setTimeout(nextRound, 1000);
-            }
-        }
+    // 4. Logique de jeu
+    userSequence.push(id);
+    const checkIdx = userSequence.length - 1;
+
+    if (userSequence[checkIdx] !== gameSequence[checkIdx]) {
+        gameOver();
+        return;
+    }
+
+    if (userSequence.length === gameSequence.length) {
+        document.getElementById('status').innerText = "Nice! ✨";
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+        setTimeout(nextRound, 1000);
+    }
+}
 
         function gameOver() {
             document.getElementById('status').innerText = "Game Over! 🐙";
